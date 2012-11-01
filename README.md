@@ -3,6 +3,11 @@
 Install and configure [guacamole](http://guac-dev.org/), an HTML5
 clientless remote desktop tunnel/proxy server.
 
+This cookbook is not yet being used in production, and is currently
+only tested by the author.
+
+**Testing on other platforms and pull requests are definitely welcome!**
+
 # Requirements
 
 Platform:

@@ -17,31 +17,5 @@
 # implied. See the License for the specific language governing
 # permissions and limitations under the License.
 
-# if platform_family?("debian")
-
-include_recipe "tomcat"
-
-package "guacamole"
-
-guacamole_war = File.join(node["tomcat"]["webapp_dir"], "guacamole.war")
-remote_file guacamole_war do
-  source node["guacamole"]["war"]["url"]
-  checksum node["guacamole"]["war"]["checksum"]
-  user node['tomcat']['user']
-  group node['tomcat']['group']
-  mode '0644'
-  notifies :restart, 'service[tomcat]'
-end
-
-# This is a very private file, owned by root, but tomcat must be able
-# to read it.
-file '/etc/guacamole/user-mapping.xml' do
-  user 'root'
-  group node['tomcat']['group']
-  mode '0640'
-end
-
-# Local Variables:
-# ruby-indent-level: 2
-# indent-tabs-mode: nil
-# End:
+default["guacamole"]["war"]["url"] = "https://s3.amazonaws.com/avance-multisite/dependencies/guacamole.war"
+default["guacamole"]["war"]["checksum"] = "87cd84e6bb187" #...
