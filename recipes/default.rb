@@ -46,6 +46,10 @@ file '/etc/guacamole/user-mapping.xml' do
   mode '0640'
 end
 
+link "#{node['tomcat']['home']}/lib/guacamole.properties" do
+  to "/etc/guacamole/guacamole.properties"
+end
+
 # Local Variables:
 # ruby-indent-level: 2
 # indent-tabs-mode: nil
