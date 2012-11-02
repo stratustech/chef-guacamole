@@ -17,11 +17,16 @@
 # implied. See the License for the specific language governing
 # permissions and limitations under the License.
 
-# if platform_family?("debian")
-
 include_recipe "tomcat"
 
-package "guacamole"
+if platform_family? "debian"
+  # Packages require `apt-get update` before installing for unknown reasons
+  include_recipe "apt"
+  package "guacamole" do
+    action :install
+    notifies :run, "execute[apt-get-update]", :immediately
+  end
+end    
 
 guacamole_war = File.join(node["tomcat"]["webapp_dir"], "guacamole.war")
 remote_file guacamole_war do
