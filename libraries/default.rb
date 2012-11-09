@@ -17,10 +17,13 @@
 # implied. See the License for the specific language governing
 # permissions and limitations under the License.
 
-#default["guacamole"]["war"]["url"] = "https://s3.amazonaws.com/avance-multisite/dependencies/guacamole.war"
-#default["guacamole"]["war"]["checksum"] = "87cd84e6bb187" #...
-default["guacamole"]["war"]["url"] = "/var/lib/guacamole/guacamole.war"
+# Packages that need to be installed/upgraded to the version of
+# guacamole being used.
+GUACAMOLE_DEB_PACKAGES = %w{guacd libguac-client-vnc0 guacamole}
+# NOTE: libguac1 or libguac3 are needed too, but the required version
+# depends on the version of guacamole, so don't explicitly require them.
 
-# Sourceforge has pre-built packages of newer versions for various platforms, downloadable as tarballs
-default["guacamole"]["sourceforge"]["url"] = "http://sourceforge.net/projects/guacamole/files/current/binary/ubuntu-12.04-amd64/guacamole-0.6.4-ubuntu-12.04-amd64.tar.gz/download"
-default["guacamole"]["sourceforge"]["checksum"] = "fe7a2777"
+# Local Variables:
+# ruby-indent-level: 2
+# indent-tabs-mode: nil
+# End:

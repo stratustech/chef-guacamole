@@ -16,6 +16,8 @@ Platform:
 
 The following cookbooks are dependencies:
 
+* apt
+
 * tomcat
 
 # Usage
@@ -24,7 +26,10 @@ The following cookbooks are dependencies:
 
 # Recipes
 
-* default.rb -- installs guacamole via debian based distribution
+* default -- Installs guacamole using distro packages.
+
+* sourceforge -- Downloads guacamole packages from sourceforge tarball
+  and creates a local package repository to install from.
 
 # Author
 

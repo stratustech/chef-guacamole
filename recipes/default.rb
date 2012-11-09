@@ -22,20 +22,38 @@ include_recipe "tomcat"
 if platform_family? "debian"
   # Packages require `apt-get update` before installing for unknown reasons
   include_recipe "apt"
-  package "guacamole" do
-    action :install
-    notifies :run, "execute[apt-get-update]", :immediately
+
+  apt_update = true
+  GUACAMOLE_DEB_PACKAGES.each do |pkg|
+    package pkg do
+      action :install
+      options "--force-yes"  # *If* we use sourceforge packages, they are not signed
+      notifies :run, "execute[apt-get-update]", :immediately if apt_update
+    end
+    apt_update = false
   end
 end    
 
 guacamole_war = File.join(node["tomcat"]["webapp_dir"], "guacamole.war")
-remote_file guacamole_war do
-  source node["guacamole"]["war"]["url"]
-  checksum node["guacamole"]["war"]["checksum"]
-  user node['tomcat']['user']
-  group node['tomcat']['group']
-  mode '0644'
-  notifies :restart, 'service[tomcat]'
+guacamole_war_url = node["guacamole"]["war"]["url"]
+if guacamole_war_url =~ Regexp.new('^http')
+  # Regular web URL, use remote_file
+  remote_file guacamole_war do
+    source node["guacamole"]["war"]["url"]
+    checksum node["guacamole"]["war"]["checksum"]
+    user node['tomcat']['user']
+    group node['tomcat']['group']
+    mode '0644'
+    notifies :restart, 'service[tomcat]'
+  end
+
+else
+  # If the guacamole war file is local, cannot use remote_file
+  cmd = "cp -f #{guacamole_war_url} #{guacamole_war}"
+  execute cmd do
+    not_if "cmp -s #{guacamole_war_url} #{guacamole_war}"
+    notifies :restart, 'service[tomcat]'
+  end
 end
 
 # This is a very private file, owned by root, but tomcat must be able
