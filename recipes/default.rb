@@ -34,8 +34,17 @@ if platform_family? "debian"
   end
 end    
 
-guacamole_war = File.join(node["tomcat"]["webapp_dir"], "guacamole.war")
 guacamole_war_url = node["guacamole"]["war"]["url"]
+guacamole_webapp_dir = File.join(node["tomcat"]["webapp_dir"], "guacamole")
+guacamole_war = "#{guacamole_webapp_dir}.war"
+
+directory guacamole_webapp_dir do
+  # Delete the webapp directory when a new war is deployed
+  recursive true
+  action :nothing
+  notifies :restart, 'service[tomcat]'
+end
+
 if guacamole_war_url =~ Regexp.new('^http')
   # Regular web URL, use remote_file
   remote_file guacamole_war do
@@ -44,7 +53,7 @@ if guacamole_war_url =~ Regexp.new('^http')
     user node['tomcat']['user']
     group node['tomcat']['group']
     mode '0644'
-    notifies :restart, 'service[tomcat]'
+    notifies :delete, "directory[#{guacamole_webapp_dir}]", :immediately
   end
 
 else
@@ -52,7 +61,7 @@ else
   cmd = "cp -f #{guacamole_war_url} #{guacamole_war}"
   execute cmd do
     not_if "cmp -s #{guacamole_war_url} #{guacamole_war}"
-    notifies :restart, 'service[tomcat]'
+    notifies :delete, "directory[#{guacamole_webapp_dir}]", :immediately
   end
 end
 
