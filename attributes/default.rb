@@ -17,10 +17,10 @@
 # implied. See the License for the specific language governing
 # permissions and limitations under the License.
 
-#default["guacamole"]["war"]["url"] = "https://s3.amazonaws.com/avance-multisite/dependencies/guacamole.war"
+#default["guacamole"]["war"]["url"] = "https://s3.amazonaws.com/myownguac/guacamole.war"
 #default["guacamole"]["war"]["checksum"] = "87cd84e6bb187" #...
 default["guacamole"]["war"]["url"] = "/var/lib/guacamole/guacamole.war"
 
 # Sourceforge has pre-built packages of newer versions for various platforms, downloadable as tarballs
-default["guacamole"]["sourceforge"]["url"] = "http://sourceforge.net/projects/guacamole/files/current/binary/ubuntu-12.04-amd64/guacamole-0.6.4-ubuntu-12.04-amd64.tar.gz/download"
-default["guacamole"]["sourceforge"]["checksum"] = "fe7a2777"
+default["guacamole"]["sourceforge"]["url"] = "http://sourceforge.net/projects/guacamole/files/current/binary/ubuntu-12.04-amd64/guacamole-0.7.0-ubuntu-12.04-amd64.tar.gz/download"
+default["guacamole"]["sourceforge"]["checksum"] = "18f19f0c1f"
