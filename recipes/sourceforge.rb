@@ -17,6 +17,10 @@
 # implied. See the License for the specific language governing
 # permissions and limitations under the License.
 
+# Append the RDP library package, which is not supported in default
+# apt distro repository.
+GUACAMOLE_DEB_PACKAGES << 'libguac-client-rdp0'
+
 include_recipe "apt"
 
 package "dpkg-dev"  # Needed to build local repository
