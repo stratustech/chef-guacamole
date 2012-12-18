@@ -22,9 +22,9 @@
 default["guacamole"]["war"]["url"] = "/var/lib/guacamole/guacamole.war"
 
 # Sourceforge has pre-built packages of newer versions for various platforms, downloadable as tarballs
-default["guacamole"]["sourceforge"]["url"] = "http://sourceforge.net/projects/guacamole/files/previous/binary/linux-x86-64/ubuntu-12.04/bundle/guacamole-0.6.0-ubuntu-12.04-x86-64.tar.gz/download"
-default["guacamole"]["sourceforge"]["checksum"] = "fe7a2777"
+#default["guacamole"]["sourceforge"]["url"] = "http://sourceforge.net/projects/guacamole/files/previous/binary/linux-x86-64/ubuntu-12.04/bundle/guacamole-0.6.0-ubuntu-12.04-x86-64.tar.gz/download"
+#default["guacamole"]["sourceforge"]["checksum"] = "fe7a2777"
 
 # Newest version, not yet tested...
-#default["guacamole"]["sourceforge"]["url"] = "http://sourceforge.net/projects/guacamole/files/current/binary/ubuntu-12.04-amd64/guacamole-0.7.0-ubuntu-12.04-amd64.tar.gz/download"
-#default["guacamole"]["sourceforge"]["checksum"] = "18f19f0c1f"
+default["guacamole"]["sourceforge"]["url"] = "http://sourceforge.net/projects/guacamole/files/current/binary/ubuntu-12.04-amd64/guacamole-0.7.0-ubuntu-12.04-amd64.tar.gz/download"
+default["guacamole"]["sourceforge"]["checksum"] = "18f19f0c1f"
