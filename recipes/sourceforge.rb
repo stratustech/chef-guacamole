@@ -73,7 +73,7 @@ execute "build guacamole repository" do
   action :nothing
   not_if { File.size?("#{guacamole_packages_dir}/Packages.gz") }
   subscribes :run, "execute[untar guacamole packages]", :immediately
-  notifies :create, "file[guacamole_sources_list]", :immediately
+  notifies :create, "file["+guacamole_sources_list+"]", :immediately
   notifies :run, "execute[apt-get update]", :immediately
 end
 
