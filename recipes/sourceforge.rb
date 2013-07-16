@@ -49,13 +49,13 @@ execute "clean guacamole packages directory" do
   command "rm -rf #{guacamole_packages_dir}/*"
   only_if { File.directory?(guacamole_packages_dir) }
   action :nothing
-  subscribes :run, resources(:remote_file => guacamole_packages_tgz), :immediately
+  subscribes :run, "remote_file[guacamole_packages_tgz]", :immediately
 end
 
 execute "untar guacamole packages" do
   command "tar xzvf #{guacamole_packages_tgz} -C #{guacamole_packages_dir} --strip-components=1 --no-same-owner --no-same-permissions > #{guacamole_packages_dir}.untar.output"
   action :nothing
-  subscribes :run, resources(:execute => "clean guacamole packages directory"), :immediately
+  subscribes :run, "execute[clean guacamole packages directory]", :immediately
 end
 
 # Apt Repository for the sourceforge guacamole packages
@@ -72,9 +72,9 @@ execute "build guacamole repository" do
   cwd guacamole_packages_dir
   action :nothing
   not_if { File.size?("#{guacamole_packages_dir}/Packages.gz") }
-  subscribes :run, resources(:execute => "untar guacamole packages"), :immediately
-  notifies :create, resources(:file => guacamole_sources_list), :immediately
-  notifies :run, resources(:execute => "apt-get update"), :immediately
+  subscribes :run, "execute[untar guacamole packages]", :immediately
+  notifies :create, "file[guacamole_sources_list]", :immediately
+  notifies :run, "execute[apt-get update]", :immediately
 end
 
 include_recipe "guacamole::default"
@@ -84,7 +84,7 @@ GUACAMOLE_DEB_PACKAGES.each do |pkg|
     # Upgrade guacamole to the latest version in the new repository
     action :nothing
     options "--force-yes"  # *If* we use sourceforge packages, they are not signed
-    subscribes :upgrade, resources(:execute => "build guacamole repository")
+    subscribes :upgrade, "execute[build guacamole repository]"
   end
 end
 
