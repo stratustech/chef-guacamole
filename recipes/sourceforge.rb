@@ -49,7 +49,7 @@ execute "clean guacamole packages directory" do
   command "rm -rf #{guacamole_packages_dir}/*"
   only_if { File.directory?(guacamole_packages_dir) }
   action :nothing
-  subscribes :run, "remote_file[guacamole_packages_tgz]", :immediately
+  subscribes :run, "remote_file["+guacamole_packages_tgz+"]", :immediately
 end
 
 execute "untar guacamole packages" do
